@@ -34,13 +34,16 @@ copy .env.example .env
 php artisan key:generate
 ```
 
-4. Configure your database in `.env`, then run migrations and seeders
+4. Update database and email information in env file. Provide database name, passsword, username.
+
+
+5. Configure your database in `.env`, then run migrations and seeders
 
 ```powershell
 php artisan migrate --seed
 ```
 
-5. Build assets (dev or prod)
+6. Build assets (dev or prod)
 
 Dev (hot-reload):
 
