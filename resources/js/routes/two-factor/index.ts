@@ -131,7 +131,7 @@ enable.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             action: enable.url(options),
             method: 'post',
         })
-    
+
     enable.form = enableForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
@@ -621,7 +621,15 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     show.form = showForm
 const twoFactor = {
-    show: Object.assign(show, show),
+    login: Object.assign(login, loginDf2c2a),
+enable: Object.assign(enable, enable),
+confirm: Object.assign(confirm, confirm),
+disable: Object.assign(disable, disable),
+qrCode: Object.assign(qrCode, qrCode),
+secretKey: Object.assign(secretKey, secretKey),
+recoveryCodes: Object.assign(recoveryCodes, recoveryCodes),
+regenerateRecoveryCodes: Object.assign(regenerateRecoveryCodes, regenerateRecoveryCodes),
+show: Object.assign(show, show),
 }
 
 export default twoFactor
