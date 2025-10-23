@@ -70,6 +70,25 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
         done: 'Done',
     };
 
+    const columnIcons: Record<keyof typeof columnTitles, React.ReactNode> = {
+        todo: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 12h6M9 16h6M5 4h14v16H5z" />
+            </svg>
+        ),
+        inprogress: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 6v6l4 2" />
+                <circle cx="12" cy="12" r="10" />
+            </svg>
+        ),
+        done: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 13l4 4L19 7" />
+            </svg>
+        ),
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tasks" />
@@ -115,7 +134,8 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {(['todo', 'inprogress', 'done'] as const).map((key) => (
                         <div key={key} className={`border rounded-xl p-4 ${columnStyles[key]}`}>
-                            <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                            <h3 className="text-lg font-semibold mb-4 text-gray-800 whitespace-nowrap flex items-center gap-2">
+                                {columnIcons[key]}
                                 {columnTitles[key]}
                             </h3>
 
