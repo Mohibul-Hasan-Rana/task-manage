@@ -8,6 +8,8 @@ A small task-management app built with Laravel, Inertia.js and React. The projec
 - Vite + TypeScript frontend build with generated route helpers (wayfinder)
 - User can filter tasks by task status.
 - Role base task update and delete. 
+- Custom middleware to log every request and calculate reponse time.
+- Use cache
 
 ## Quick setup
 
