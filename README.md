@@ -115,7 +115,9 @@ Tasks (protected)
 
 ## Scability and Future Updates
 
-To improve scalability, we can integrate Redis to cache frequently used data like task lists, user sessions, and dashboard stats. This will help reduce database queries and speed up response times as the system grows. For better user experience, we can also add pagination and infinite scrolling, so tasks load gradually instead of all at once. Looking ahead, features like lazy loading, background jobs, and API rate limiting can further enhance performance and keep the application running smoothly even with heavy traffic.
+- To improve scalability, we can integrate Redis to cache frequently used data like task lists, user sessions, and dashboard stats. This will help reduce database queries and speed up response times as the system grows.
+- For better user experience, we can also add pagination and infinite scrolling, so tasks load gradually instead of all at once. Looking ahead, features like lazy loading, background jobs, and API rate limiting can further enhance performance and keep the application running smoothly even with heavy traffic. 
+- Also we can implement websocket for real time update of tasks by Reverb.
 
 
 
