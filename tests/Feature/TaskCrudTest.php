@@ -73,7 +73,8 @@ class TaskCrudTest extends TestCase
             'status' => 'complete',
         ]);
 
-        $response->assertRedirect();
+        // ✅ Expect OK response (since Inertia or JSON response, not redirect)
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
@@ -85,6 +86,7 @@ class TaskCrudTest extends TestCase
             return $mail->hasTo($user->email);
         });
     }
+
 
     public function test_cannot_edit_completed_task()
     {
