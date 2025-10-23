@@ -76,6 +76,7 @@ php artisan test
 
 - Install PHP deps: `composer install`
 - Install JS deps: `npm install`
+- Install JS deps: `npm run dev`
 - Run tests: `php artisan test`
 
 
