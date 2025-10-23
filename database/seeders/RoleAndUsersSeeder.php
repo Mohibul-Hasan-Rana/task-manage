@@ -36,7 +36,7 @@ class RoleAndUsersSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Normal User',
+            'name' => 'Normal User 2',
             'email' => 'user2@example.com',
             'role_id' => $userRole->id,
         ]);
