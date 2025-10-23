@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Models\Role;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -30,10 +31,14 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
+        // Ensure a default 'User' role exists and attach it
+        $role = Role::firstOrCreate(['name' => 'User']);
+
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'role_id' => $role->id,
         ]);
     }
 }

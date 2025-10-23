@@ -14,6 +14,11 @@ class TaskPolicy
             return true;
         }
 
+        // Users cannot update tasks that are already complete
+        if ($task->status === Task::STATUS_COMPLETE) {
+            return false;
+        }
+
         // Users can only update their own tasks
         return $user->id === $task->user_id;
     }

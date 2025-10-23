@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -27,10 +28,9 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
+            // Ensure users created in tests get the 'User' role (create if missing)
+            'role_id' => Role::firstOrCreate(['name' => 'User'])->id,
             'remember_token' => Str::random(10),
-            'two_factor_secret' => Str::random(10),
-            'two_factor_recovery_codes' => Str::random(10),
-            'two_factor_confirmed_at' => now(),
         ];
     }
 
@@ -39,20 +39,18 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
 
     /**
-     * Indicate that the model does not have two-factor authentication configured.
+     * Backwards-compatible no-op for tests calling withoutTwoFactor().
      */
     public function withoutTwoFactor(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
-            'two_factor_confirmed_at' => null,
-        ]);
+        // Two-factor has been removed from the app; keep this method for
+        // compatibility with tests that call it.
+        return $this->state(fn(array $attributes) => []);
     }
 }
