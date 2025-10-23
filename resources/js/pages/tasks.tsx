@@ -26,6 +26,9 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    type TaskFilter = 'all' | 'incomplete' | 'inprogress' | 'complete';
+    const [filter, setFilter] = useState<TaskFilter>('all');
+
     // Handle flash messages from Laravel
     useEffect(() => {
         if (flash?.success || flash?.error) {
@@ -44,11 +47,15 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
         }
     }, [notification]);
 
-    // Group tasks by status
+    // Filter logic
+    const filteredTasks =
+        filter === 'all' ? tasksList : tasksList.filter((task) => task.status === filter);
+
+    // Group filtered tasks by status
     const groupedTasks = {
-        todo: tasksList.filter((task) => task.status === 'incomplete'),
-        inprogress: tasksList.filter((task) => task.status === 'inprogress'),
-        done: tasksList.filter((task) => task.status === 'complete'),
+        todo: filteredTasks.filter((task) => task.status === 'incomplete'),
+        inprogress: filteredTasks.filter((task) => task.status === 'inprogress'),
+        done: filteredTasks.filter((task) => task.status === 'complete'),
     };
 
     const columnStyles = {
@@ -76,16 +83,33 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
             )}
 
             <div className="flex flex-col h-full gap-6 p-4">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-wrap justify-between items-center gap-3">
                     <h2 className="text-2xl font-semibold text-gray-900">Tasks</h2>
-                    <button
-                        onClick={() => setIsCreateModalOpen(true)}
-                        className="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 cursor-pointer"
-                        title="Create New Task"
-                    >
-                        New Task
-                    </button>
+
+                    <div className="flex items-center gap-3">
+                        Filter :
+                        {/* Filter Dropdown */}
+                        <select
+                            value={filter}
+                            onChange={(e) => setFilter(e.target.value as TaskFilter)}
+                            className="border-gray-300 rounded-md text-sm px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                            <option value="all">All</option>
+                            <option value="incomplete">To DO</option>
+                            <option value="inprogress">In Progress</option>
+                            <option value="complete">Done</option>
+                        </select>
+
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 cursor-pointer"
+                            title="Create New Task"
+                        >
+                            New Task
+                        </button>
+                    </div>
                 </div>
+
 
                 {/* Kanban Board */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
