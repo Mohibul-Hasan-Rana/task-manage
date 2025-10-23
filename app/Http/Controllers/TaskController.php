@@ -39,8 +39,16 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $this->authorize('update', $task);
+        $oldStatus = $task->status;
+
 
         $task = $this->taskService->updateTask($task, $request->validated());
+
+        // if ($oldStatus !== $task->status && $task->status === 'complete') {
+        //     // Observer handles dispatch
+        // }
+
+        // Observer handles dispatch code in observer
 
         return redirect()->back()->with('success', 'Task updated successfully.');
     }
