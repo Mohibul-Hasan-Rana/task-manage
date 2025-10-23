@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskController extends Controller
 {
@@ -39,37 +40,44 @@ class TaskController extends Controller
 
     public function store(CreateTaskRequest $request)
     {
-        $task = $this->taskService->createTask($request->validated());
+        try {
 
-        // Clear the tasks cache for the current user
-        $this->clearTasksCache();
+            $task = $this->taskService->createTask($request->validated());
+            $this->clearTasksCache();
 
-        return redirect()->back()->with('success', 'Task created successfully.');
+            return redirect()->back()->with('success', 'Task created successfully.');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $this->authorize('update', $task);
-        $oldStatus = $task->status;
+       try {
+            $this->authorize('update', $task);
 
-        $task = $this->taskService->updateTask($task, $request->validated());
+            $this->taskService->updateTask($task, $request->validated());
+            $this->clearTasksCache();
 
-        // Clear the tasks cache for all users who can see this task
-        $this->clearTasksCache();
-
-        return redirect()->back()->with('success', 'Task updated successfully.');
+            return redirect()->back()->with('success', 'Task updated successfully.');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('error', 'You are not authorized to update this task.');
+        }
     }
 
     public function destroy(Task $task)
     {
-        $this->authorize('delete', $task);
-        
-        $task->delete();
+        try {
+            $this->authorize('delete', $task);
 
-        // Clear the tasks cache for all users who could see this task
-        $this->clearTasksCache();
+            $task->delete();
+            $this->clearTasksCache();
 
-        return redirect()->back()->with('success', 'Task deleted successfully.');
+            return redirect()->back()->with('success', 'Task deleted successfully.');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('error', 'You are not authorized to delete this task.');
+        }
     }
 
     /**

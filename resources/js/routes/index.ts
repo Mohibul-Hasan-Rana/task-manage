@@ -354,7 +354,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
 export const tasks = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -369,7 +369,7 @@ tasks.definition = {
 
 /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
 tasks.url = (options?: RouteQueryOptions) => {
@@ -378,7 +378,7 @@ tasks.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
 tasks.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -387,7 +387,7 @@ tasks.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
 tasks.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -397,7 +397,7 @@ tasks.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
     const tasksForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -407,7 +407,7 @@ tasks.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
         tasksForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -416,7 +416,7 @@ tasks.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\TaskController::tasks
- * @see app/Http/Controllers/TaskController.php:24
+ * @see app/Http/Controllers/TaskController.php:25
  * @route '/tasks'
  */
         tasksForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
