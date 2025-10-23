@@ -25,6 +25,15 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose }) =>
         });
     };
 
+    const renderStatusLabel = (status: TaskStatus) => {
+        switch (status) {
+            case 'inprogress':
+                return 'In Progress';
+            default:
+                return status.charAt(0).toUpperCase() + status.slice(1);
+        }
+    };
+
     return (
         <Dialog open={isOpen} onClose={onClose} className="relative z-50">
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -59,15 +68,21 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose }) =>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Status</label>
-                                <select
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                    value={formData.status}
-                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => 
-                                        setFormData({ ...formData, status: e.target.value as TaskStatus })}
-                                >
-                                    <option value="incomplete">Incomplete</option>
-                                    <option value="complete">Complete</option>
-                                </select>
+                                <div className="mt-1 flex items-center gap-3">
+                                    <select
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        value={formData.status}
+                                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                                            setFormData({ ...formData, status: e.target.value as TaskStatus })}
+                                    >
+                                        <option value="incomplete">Incomplete</option>
+                                        <option value="inprogress">In Progress</option>
+                                        <option value="complete">Complete</option>
+                                    </select>
+                                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                                        {renderStatusLabel(formData.status)}
+                                    </span>
+                                </div>
                             </div>
 
 

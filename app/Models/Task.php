@@ -13,6 +13,7 @@ class Task extends Model
     protected $fillable = ['title', 'description', 'status', 'user_id'];
 
     public const STATUS_INCOMPLETE = 'incomplete';
+    public const STATUS_INPROGRESS = 'inprogress';
     public const STATUS_COMPLETE = 'complete';
 
     protected static function boot()

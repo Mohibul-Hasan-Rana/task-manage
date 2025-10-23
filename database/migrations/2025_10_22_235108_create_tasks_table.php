@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->index();
             $table->string('title')->unique();
             $table->text('description')->nullable();
-            $table->enum('status', ['incomplete', 'complete'])->default('incomplete')->index();
+            $table->enum('status', ['incomplete', 'inprogress', 'complete'])->default('incomplete')->index();
             $table->timestamps();
         });
     }

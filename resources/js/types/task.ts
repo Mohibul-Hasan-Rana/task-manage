@@ -9,7 +9,7 @@ export interface Task {
     };
 }
 
-export type TaskStatus = 'incomplete' | 'complete';
+export type TaskStatus = 'incomplete' | 'inprogress' | 'complete';
 
 export interface TaskFormData extends Record<string, string> {
     title: string;

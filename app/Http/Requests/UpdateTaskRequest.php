@@ -22,7 +22,7 @@ class UpdateTaskRequest extends FormRequest
                 Rule::unique('tasks', 'title')->ignore($this->task->id),
             ],
             'description' => 'required|string',
-            'status' => 'required|string|in:incomplete,complete',
+            'status' => 'required|string|in:incomplete,inprogress,complete',
         ];
     }
 }

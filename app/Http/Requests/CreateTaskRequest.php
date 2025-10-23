@@ -16,7 +16,7 @@ class CreateTaskRequest extends FormRequest
         return [
             'title' => 'required|string|max:255|unique:tasks,title',
             'description' => 'required|string',
-            'status' => 'required|string|in:incomplete,complete',
+            'status' => 'required|string|in:incomplete,inprogress,complete',
         ];
     }
 }
