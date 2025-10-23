@@ -13,7 +13,7 @@ class TaskService
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'status' => $validatedData['status'],
-            'user_id' => Auth::id(), 
+            'user_id' => Auth::id(),
         ]);
     }
 
@@ -37,5 +37,16 @@ class TaskService
     public function getAllTasks()
     {
         return Task::with('user')->latest()->get();
+    }
+
+    /**
+     * Get tasks for a specific user
+     *
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTasksForUser(int $userId)
+    {
+        return Task::with('user')->where('user_id', $userId)->latest()->get();
     }
 }
