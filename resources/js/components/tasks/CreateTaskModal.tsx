@@ -75,9 +75,9 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose }) =>
                                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                                             setFormData({ ...formData, status: e.target.value as TaskStatus })}
                                     >
-                                        <option value="incomplete">Incomplete</option>
-                                        <option value="inprogress">In Progress</option>
-                                        <option value="complete">Complete</option>
+                                        <option value="incomplete">To do</option>
+                                        <option value="inprogress">In progress</option>
+                                        <option value="complete">Done</option>
                                     </select>
                                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
                                         {renderStatusLabel(formData.status)}
@@ -98,7 +98,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose }) =>
                             </button>
                             <button
                                 type="submit"
-                                className="rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                className="rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer"
                             >
                                 Create Task
                             </button>

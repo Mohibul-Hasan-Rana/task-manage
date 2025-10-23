@@ -103,9 +103,9 @@ const UpdateTaskModalContent: React.FC<UpdateTaskModalProps> = ({ isOpen, onClos
                                         value={formData.status}
                                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, status: e.target.value as TaskStatus })}
                                     >
-                                        <option value="incomplete">Incomplete</option>
-                                        <option value="inprogress">In Progress</option>
-                                        <option value="complete">Complete</option>
+                                        <option value="incomplete">To do</option>
+                                        <option value="inprogress">In progress</option>
+                                        <option value="complete">Done</option>
                                     </select>
                                 )}
                             </div>
@@ -122,7 +122,7 @@ const UpdateTaskModalContent: React.FC<UpdateTaskModalProps> = ({ isOpen, onClos
                             {task.status !== 'complete' && (
                                 <button
                                     type="submit"
-                                    className="rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    className="rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer"
                                 >
                                     Update Task
                                 </button>

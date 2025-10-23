@@ -65,8 +65,8 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
     };
 
     const columnTitles = {
-        todo: 'To Do',
-        inprogress: 'In Progress',
+        todo: 'To do',
+        inprogress: 'In progress',
         done: 'Done',
     };
 
@@ -95,17 +95,17 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
                             className="border-gray-300 rounded-md text-sm px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500"
                         >
                             <option value="all">All</option>
-                            <option value="incomplete">To DO</option>
-                            <option value="inprogress">In Progress</option>
+                            <option value="incomplete">To do</option>
+                            <option value="inprogress">In progress</option>
                             <option value="complete">Done</option>
                         </select>
 
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 cursor-pointer"
+                            className="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-indigo-700 cursor-pointer"
                             title="Create New Task"
                         >
-                            New Task
+                            New task +
                         </button>
                     </div>
                 </div>
