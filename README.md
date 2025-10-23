@@ -6,6 +6,8 @@ A small task-management app built with Laravel, Inertia.js and React. The projec
 - Inertia + React frontend components and layouts
 - Unit and Feature tests (PHPUnit)
 - Vite + TypeScript frontend build with generated route helpers (wayfinder)
+- User can filter tasks by task status.
+- Role base task update and delete. 
 
 ## Quick setup
 
@@ -50,6 +52,13 @@ Dev (hot-reload):
 ```powershell
 npm run dev
 ```
+
+7. Run Command
+
+```powershell
+php artisan serve
+```
+
 ## Credentials
 
 Admin Email : admin@example.com
@@ -78,6 +87,7 @@ php artisan test
 - Install JS deps: `npm install`
 - Install JS deps: `npm run dev`
 - Run tests: `php artisan test`
+- Run server: `php artisan serve`
 
 
 ## API Endpoints
