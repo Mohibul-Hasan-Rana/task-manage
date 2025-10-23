@@ -50,6 +50,18 @@ Dev (hot-reload):
 ```powershell
 npm run dev
 ```
+## Credentials
+
+Admin Email : admin@example.com
+Password : password
+
+User Email : user@example.com
+Password : password
+
+User2 Email : user2@example.com
+Password : password
+
+
 
 ## Running tests
 
