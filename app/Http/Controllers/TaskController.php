@@ -6,6 +6,7 @@ use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\TaskService;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,8 +47,8 @@ class TaskController extends Controller
             $this->clearTasksCache();
 
             return redirect()->back()->with('success', 'Task created successfully.');
-        } catch (AuthorizationException $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
 
     }
@@ -62,7 +63,9 @@ class TaskController extends Controller
 
             return redirect()->back()->with('success', 'Task updated successfully.');
         } catch (AuthorizationException $e) {
-            return redirect()->back()->with('error', 'You are not authorized to update this task.');
+             return redirect()->back()->with('error', 'You are not authorized to update this task.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
@@ -76,7 +79,9 @@ class TaskController extends Controller
 
             return redirect()->back()->with('success', 'Task deleted successfully.');
         } catch (AuthorizationException $e) {
-            return redirect()->back()->with('error', 'You are not authorized to delete this task.');
+             return redirect()->back()->with('error', 'You are not authorized to delete this task.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

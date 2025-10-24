@@ -11,6 +11,8 @@ use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskController extends Controller
 {
@@ -25,53 +27,100 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $user = $request->user();
-        $cacheKey = "tasks_user_{$user->id}";
+        try {
+            $user = $request->user();
+            $cacheKey = "tasks_user_{$user->id}";
 
-        $tasks = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($user) {
-            return $this->taskService->getTasksForUser($user->id);
-        });
+            $tasks = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($user) {
+                return $this->taskService->getTasksForUser($user->id);
+            });
 
-        return TaskResource::collection($tasks);
+            return TaskResource::collection($tasks);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to fetch tasks.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function store(CreateTaskRequest $request)
     {
-        $task = $this->taskService->createTask($request->validated());
+        try {
+            $task = $this->taskService->createTask($request->validated());
 
-        // clear cache for the user
-        $userId = $request->user()->id;
-        Cache::forget("tasks_user_{$userId}");
+            Cache::forget("tasks_user_{$request->user()->id}");
 
-        return new TaskResource($task);
+            return (new TaskResource($task))
+                ->additional(['message' => 'Task created successfully.']);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to create task.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function show(Task $task)
     {
-        $this->authorize('view', $task);
-        return new TaskResource($task);
+        try {
+            $this->authorize('view', $task);
+            return new TaskResource($task);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to view this task.',
+            ], 403);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to fetch task details.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $this->authorize('update', $task);
-        $task = $this->taskService->updateTask($task, $request->validated());
+        try {
+            $this->authorize('update', $task);
+            $task = $this->taskService->updateTask($task, $request->validated());
 
-        // clear cache for the user
-        $userId = $task->user_id;
-        Cache::forget("tasks_user_{$userId}");
+            Cache::forget("tasks_user_{$task->user_id}");
 
-        return new TaskResource($task);
+            return (new TaskResource($task))
+                ->additional(['message' => 'Task updated successfully.']);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to update this task.',
+            ], 403);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update task.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function destroy(Task $task)
     {
-        $this->authorize('delete', $task);
-        $userId = $task->user_id;
-        $this->taskService->deleteTask($task);
+        try {
+            $this->authorize('delete', $task);
 
-        // clear cache for the user
-        Cache::forget("tasks_user_{$userId}");
-        return response()->noContent();
+            $userId = $task->user_id;
+            $this->taskService->deleteTask($task);
+            Cache::forget("tasks_user_{$userId}");
+
+            return response()->json([
+                'message' => 'Task deleted successfully.',
+            ], 200);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to delete this task.',
+            ], 403);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to delete task.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
