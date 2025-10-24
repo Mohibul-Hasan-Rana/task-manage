@@ -189,7 +189,7 @@ const Tasks: React.FC<Props> = ({ tasks: tasksList, flash }) => {
                                                                 router.delete(`/tasks/${task.id}`, {
                                                                     preserveScroll: true,
                                                                     onSuccess: () => setNotification({ message: 'Task deleted', type: 'success' }),
-                                                                    onError: () => setNotification({ message: 'Error deleting task', type: 'error' }),
+                                                                    //onError: () => setNotification({ message: 'Error deleting task', type: 'error' }),
                                                                 });
                                                             }
                                                         }}
